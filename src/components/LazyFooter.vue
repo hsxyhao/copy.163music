@@ -1,42 +1,42 @@
 <template>
 	<div class="footer-box">
 		<div class="play-bar">
-			<div class="edit bg-red-gradients">
-				<div class="song-info">
-					<img src="/static/imgs/singer.jpg">
-					<div class="song-details">
-						<p class="song-name">听妈妈的话</p>
-						<p class="song-author">周杰伦</p>
-					</div>
-				</div>
-				<div class="song-edit">
-					<span class="icon iconfont icon-play"></span>
-					<span class="icon iconfont icon-playlist"></span>
-				</div>
-			</div>
 			<div class="progress">
 				<div class="progress-bg"></div>
 			</div>
 		</div>
-		<div class="footer" :class="{fixed:fixed}">
+		<div class="footer">
 			<div class="found-music footer-selector">
-				<span class="icon iconfont icon-home"></span>
-				<span>发现音乐</span>
+				<router-link to="/home">
+					<span class="icon iconfont icon-new-o"></span>
+					<span>发现音乐</span>
+				</router-link>
 			</div>
 			<div class="my-music">
-				<span class="icon iconfont icon-music"></span>
-				<span>我的音乐</span>
+				<router-link to="/my">
+					<span class="icon iconfont icon-music-o"></span>
+					<span>我的音乐</span>
+				</router-link>
 			</div>
-			<div class="btn-fixed footer-selector">
-				<span class="icon iconfont icon-fixed"></span>
+			<div class="btn-fixed">
+				<div class="song-img">
+					<div class="song-edit" @touchend="togglePlay()">
+						<span class="icon iconfont icon-stop" :class="{'icon-stop':playing,'icon-play':!playing}"></span>
+					</div>
+					<img :class="{'start':playing}" :src="song.img">
+				</div>
 			</div>
 			<div class="setting">
-				<span class="icon iconfont icon-setting"></span>
-				<span>设置</span>
+				<router-link to="/">
+					<span class="icon iconfont icon-setting-o"></span>
+					<span>设置</span>
+				</router-link>
 			</div>
 			<div class="user">
-				<span class="icon iconfont icon-account"></span>
-				<span>用户</span>
+				<router-link to="/">
+					<span class="icon iconfont icon-user-o"></span>
+					<span>用户</span>
+				</router-link>
 			</div>
 		</div>
 	</div>
@@ -45,21 +45,46 @@
 	export default {
 		data() {
 			return {
-				fixed: false
+				show: true,
+				playing: true,
+				song:{
+					img:'/static/imgs/list_6.jpg'
+				}
 			};
+		},
+		methods:{
+			stop() {
+
+			},
+			start() {
+
+			},
+			next() {
+
+			},
+			prev() {
+
+			},
+			togglePlay() {
+				this.playing = !this.playing;
+			},
+			toggleShow() {
+				this.show = !this.show;
+			}
 		}
 	}
 </script>
 <style scoped>
+	@keyframes music_playing {
+      from {transform:rotate(0deg);}
+      to {transform:rotate(360deg);}
+    }
 	.footer-box {
 		position: fixed;
 		width: 100%;
 		bottom: 0px;
-		height: 50px;
+		height: 60px;
 		box-shadow: 0px 0px 20px silver;
-	}
-	.footer:active {
-		transform: translateY(50px);
 	}
 	.footer {
 		display: flex;
@@ -69,24 +94,75 @@
     	align-items: center;
 		background-color: #ffffff;
 		transition: all 0.2s linear;
-		transform: translateY(-50px); 
+		transform: translateY(-60px); 
+	}
+	.show {
+		transform: translateY(60px) !important;
 	}
 	.footer .icon {
-		font-size: 48px;/*no*/
+		font-size: 56px;/*no*/
 		color: #CDCBCE;
+	}
+	.footer a {
+		display: flex;
+		flex-direction: column;
+		color: #CDCBCE;
+		font-size: 20px;/*no*/
+		flex: 1;
+		align-items: center;
+		justify-content: center;
 	}
 	.footer > div {
 		display: flex;
 		flex-direction: column;
-		color: #CDCBCE;
+		align-items: center;
+		justify-content: center;
+		flex: 1;
+		height: 100%;
 	}
 	.btn-fixed > .icon {
 		font-size: 40px;
 	}
-	.footer-selector {
+	.song-img {
+		position: relative;
+		width: 55px;
+		height: 55px;
+		border-radius: 50%;
+	}
+	.song-img > img {
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		width: 100%;
+		height: 100%;
+		border-radius: 50%;
+	}
+	.song-edit {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.song-edit .icon {
+		z-index: 10;
+    	font-size: 50px;/*no*/
+    	color: #919191a6;
+	}
+	.start {
+		-webkit-animation: music_playing;
+		-o-animation: music_playing;
+		animation: music_playing;
+
+		animation-duration: 3s;
+		animation-timing-function:linear;
+		animation-iteration-count:infinite;
+		animation-direction: normal; 
+	}
+	.footer-selector a{
 		color: #EE4B5D;
 	}
-	.footer-selector > .icon {
+	.footer-selector .icon {
 		color: #EE4B5D;
 	}
 	.footer-selector > span {
@@ -118,39 +194,5 @@
 		background: #E55D87;  /* fallback for old browsers */
 		background: -webkit-linear-gradient(to right, #5FC3E4, #E55D87);  /* Chrome 10-25, Safari 5.1-6 */
 		background: linear-gradient(to right, #5FC3E4, #E55D87); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-	}
-
-	.song-info {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		height: 100%;
-		flex: 1;
-	}
-	.song-info img {
-		width: 40px;
-		height: 40px;
-	}
-	.song-details {
-		margin: 0 10px;/*no*/
-	}
-	.song-info .song-name {
-		font-size: 28px;/*no*/
-		color: #fff;
-		padding: 5px 15px;/*no*/
-	}
-	.song-info .song-author {
-		font-size: 20px;/*no*/
-		color: silver;
-		padding: 5px 15px;/*no*/
-	}
-	.song-edit {
-		display: flex;
-		align-items: center;
-	}
-	.song-edit .icon{
-		font-size: 46px;/*no*/
-		margin: 0 15px;
-		color: #fff;
 	}
 </style>

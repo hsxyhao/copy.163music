@@ -8,15 +8,30 @@
 </template>
 <script>
 	export default {
+		props:['playing'],
 		data() {
 			return {
-				playing: true
 			}
 		}
 	}
 </script>
 <style>
-
+    @keyframes playing_one {
+      from {height: 10px;/*no*/}
+      to {height: 30px;/*no*/}
+    }
+    @keyframes playing_two {
+      from {height: 35px;/*no*/}
+      to {height: 10px;/*no*/}
+    }
+    @keyframes playing_three {
+      from {height: 15px;/*no*/}
+      to {height: 35px;/*no*/}
+    }
+    @keyframes playing_four {
+      from {height: 30px;/*no*/}
+      to {height: 5px;/*no*/}
+    }
 	.playing-btn {
 		display: flex;
 		flex: row;
@@ -33,8 +48,8 @@
 		-webkit-animation: playing_one;
 		-o-animation: playing_one;
 		animation: playing_one;
-		animation-duration: .2s;
-		animation-delay: .5s;
+
+		animation-duration: .3s;
 		animation-iteration-count:infinite;
 		animation-direction: alternate;
 	}
@@ -42,8 +57,8 @@
 		-webkit-animation: playing_two;
 		-o-animation: playing_two;
 		animation: playing_two;
-		animation-duration: .2s;
-		animation-delay: .4s;
+
+		animation-duration: .3s;
 		animation-iteration-count:infinite;
 		animation-direction: alternate;
 	}
@@ -52,8 +67,7 @@
 		-o-animation: playing_three;
 		animation: playing_three;
 
-		animation-duration: .2s;
-		animation-delay: .7s;
+		animation-duration: .3s;
 		animation-iteration-count:infinite;
 		animation-direction: alternate;
 	}
@@ -62,19 +76,18 @@
 		-o-animation: playing_four;
 		animation: playing_four;
 
-		animation-duration: .2s;
-		animation-delay: .5s;
+		animation-duration: .3s;
 		animation-iteration-count:infinite;
 		animation-direction: alternate;
 	}
 	.playing-one {
-		height: 30px;/*no*/
+		height: 10px;/*no*/
 	}
 	.playing-two {
-		height: 36px;/*no*/
+		height: 35px;/*no*/
 	}
 	.playing-three {
-		height: 25px;/*no*/
+		height: 15px;/*no*/
 	}
 	.playing-four {
 		height: 30px;/*no*/

@@ -5,6 +5,10 @@ import App from './App'
 import router from './router'
 // 移动端阿里适配方案
 import 'lib-flexible'
+// vue全局状态管理组件
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
 
 Vue.config.productionTip = false
 

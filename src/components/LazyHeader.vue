@@ -2,12 +2,12 @@
 	<div class="head-box bg-red-gradients">
 		<div class="tab-bar">
 			<div>
-				<span class="icon iconfont icon-user"></span>
+				<span class="icon iconfont icon-menu"></span>
 			</div>
 			<div class="bar-title">
-				<router-link to="/self"><span>我的</span></router-link>
-				<router-link to="/self"><span>推荐</span></router-link>
-				<router-link to="/self"><span>动态</span></router-link>
+				<router-link to="/home"><span>音乐</span></router-link>
+				<router-link to="/self"><span>视频</span></router-link>
+				<router-link to="/self"><span>电台</span></router-link>
 			</div>
 			<playing></playing>
 		</div>
@@ -33,6 +33,8 @@
 <style scoped>
 	.head-box {
 		position: fixed;
+		z-index: 999;
+		top: 0px;
 		height: 90px;
 		width: 100%;
 		padding: 0 10px;
@@ -45,6 +47,7 @@
 	.tab-bar a {
 		font-size: 30px;/*no*/
 		color: #FFF;
+	    flex: 1;
 	}
 	.tab-bar {
 		height: 50px;

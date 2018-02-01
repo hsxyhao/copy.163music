@@ -1,14 +1,17 @@
 <template>
-	<div class="playing-btn" :class="{active:playing}">
-		<div class="playing-one"></div>
-		<div class="playing-two"></div>
-		<div class="playing-three"></div>
-		<div class="playing-four"></div>
+	<div class="playing-btn">
+		<div class="playing-one" :class="{'stopAnimation':!playing,'runAnimtion':playing}"></div>
+		<div class="playing-two" :class="{'stopAnimation':!playing,'runAnimtion':playing}"></div>
+		<div class="playing-three" :class="{'stopAnimation':!playing,'runAnimtion':playing}"></div>
+		<div class="playing-four" :class="{'stopAnimation':!playing,'runAnimtion':playing}"></div>
 	</div>
 </template>
 <script>
+	import { mapGetters, mapActions } from 'vuex'
 	export default {
-		props:['playing'],
+		computed: mapGetters({
+			playing: 'getPlayStatus'
+		}),
 		data() {
 			return {
 			}
@@ -44,7 +47,9 @@
 		background-color: #fff;
 		margin: 3px;/*no*/
 	}
-	.active > .playing-one {
+	.playing-one {
+		height: 10px;/*no*/
+
 		-webkit-animation: playing_one;
 		-o-animation: playing_one;
 		animation: playing_one;
@@ -53,7 +58,9 @@
 		animation-iteration-count:infinite;
 		animation-direction: alternate;
 	}
-	.active > .playing-two {
+	.playing-two {
+		height: 35px;/*no*/
+
 		-webkit-animation: playing_two;
 		-o-animation: playing_two;
 		animation: playing_two;
@@ -62,7 +69,9 @@
 		animation-iteration-count:infinite;
 		animation-direction: alternate;
 	}
-	.active > .playing-three {
+	.playing-three {
+		height: 15px;/*no*/
+
 		-webkit-animation: playing_three;
 		-o-animation: playing_three;
 		animation: playing_three;
@@ -71,7 +80,9 @@
 		animation-iteration-count:infinite;
 		animation-direction: alternate;
 	}
-	.active > .playing-four {
+	.playing-four {
+		height: 30px;/*no*/
+
 		-webkit-animation: playing_four;
 		-o-animation: playing_four;
 		animation: playing_four;
@@ -79,17 +90,5 @@
 		animation-duration: .3s;
 		animation-iteration-count:infinite;
 		animation-direction: alternate;
-	}
-	.playing-one {
-		height: 10px;/*no*/
-	}
-	.playing-two {
-		height: 35px;/*no*/
-	}
-	.playing-three {
-		height: 15px;/*no*/
-	}
-	.playing-four {
-		height: 30px;/*no*/
 	}
 </style>

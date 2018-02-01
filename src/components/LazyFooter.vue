@@ -23,7 +23,7 @@
 					<div class="song-edit" @touchend="togglePlay()">
 						<span class="icon iconfont icon-stop" :class="{'icon-stop':playing,'icon-play':!playing}"></span>
 					</div>
-					<img :class="{'start':playing}" :src="song.img">
+					<img :class="{'stopAnimation':!playing,'runAnimtion':playing}" :src="song.img">
 				</div>
 			</div>
 			<div class="setting">
@@ -42,35 +42,21 @@
 	</div>
 </template>
 <script>
+	import { mapGetters, mapActions } from 'vuex'
 	export default {
+		computed: mapGetters({
+			playing: 'getPlayStatus'
+		}),
+		methods: mapActions([
+			'togglePlay','play','stop'
+		]),
 		data() {
 			return {
 				show: true,
-				playing: true,
 				song:{
 					img:'/static/imgs/list_6.jpg'
 				}
 			};
-		},
-		methods:{
-			stop() {
-
-			},
-			start() {
-
-			},
-			next() {
-
-			},
-			prev() {
-
-			},
-			togglePlay() {
-				this.playing = !this.playing;
-			},
-			toggleShow() {
-				this.show = !this.show;
-			}
 		}
 	}
 </script>
@@ -136,6 +122,15 @@
 		width: 100%;
 		height: 100%;
 		border-radius: 50%;
+		
+		-webkit-animation: music_playing;
+		-o-animation: music_playing;
+		animation: music_playing;
+
+		animation-duration: 3s;
+		animation-timing-function:linear;
+		animation-iteration-count:infinite;
+		animation-direction: normal; 
 	}
 	.song-edit {
 		width: 100%;
@@ -148,16 +143,6 @@
 		z-index: 10;
     	font-size: 50px;/*no*/
     	color: #919191a6;
-	}
-	.start {
-		-webkit-animation: music_playing;
-		-o-animation: music_playing;
-		animation: music_playing;
-
-		animation-duration: 3s;
-		animation-timing-function:linear;
-		animation-iteration-count:infinite;
-		animation-direction: normal; 
 	}
 	.footer-selector a{
 		color: #EE4B5D;

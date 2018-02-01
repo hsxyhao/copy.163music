@@ -82,6 +82,12 @@
 	}
 </script>
 <style>
+	.stopAnimation {
+		animation-play-state:paused !important;
+	}
+	.runAnimation {
+		animation-play-state:running !important;
+	}
 	.content {
 		height: 100%;
 	}

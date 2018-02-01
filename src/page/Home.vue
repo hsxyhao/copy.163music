@@ -22,7 +22,7 @@
 					</div>
 				</div>
 			</div>
-			<lazy-sing-list v-bind:lists="lists">
+			<lazy-sing-list v-bind:lists="list" v-for="list in lists">
 				<div slot="head" class="title-line">推荐歌单<span class="icon iconfont icon-right-o"></span></div>
 			</lazy-sing-list>
 		</div>
@@ -40,42 +40,53 @@
 		data() {
 			return {
 				lists:[
-					{
-						img:'/static/imgs/list_1.jpg',
-						name:'单曲循环都不够',
-						user:'胖妞啊%cc',
-						count:'303'
-					},
-					{
-						img:'/static/imgs/list_2.jpg',
-						name:'一直听到现在的歌',
-						user:'夏季恋歌',
-						count:'305'
-					},
-					{
-						img:'/static/imgs/list_3.jpg',
-						name:'让你沦陷的中文歌曲',
-						user:'oba mylover',
-						count:'102'
-					},
-					{
-						img:'/static/imgs/list_4.jpg',
-						name:'阳光下的旋律',
-						user:'猪小妹-v5',
-						count:'223'
-					},
-					{
-						img:'/static/imgs/list_5.jpg',
-						name:'天籁之音不觉于耳',
-						user:'chenyu',
-						count:'160'
-					},
-					{
-						img:'/static/imgs/list_6.jpg',
-						name:'还好这辈子遇到你',
-						user:'anni',
-						count:'309'
-					}
+						[
+						{
+							img:'/static/imgs/list_1.jpg',
+							name:'单曲循环都不够',
+							user:'胖妞啊%cc',
+							count:'303'
+						},
+						{
+							img:'/static/imgs/list_2.jpg',
+							name:'一直听到现在的歌',
+							user:'夏季恋歌',
+							count:'305'
+						},
+						{
+							img:'/static/imgs/list_3.jpg',
+							name:'让你沦陷的中文歌曲',
+							user:'oba mylover',
+							count:'102'
+						},
+						{
+							img:'/static/imgs/list_4.jpg',
+							name:'阳光下的旋律',
+							user:'猪小妹-v5',
+							count:'223'
+						},
+						{
+							img:'/static/imgs/list_5.jpg',
+							name:'天籁之音不觉于耳',
+							user:'chenyu',
+							count:'160'
+						},
+						{
+							img:'/static/imgs/list_6.jpg',
+							name:'还好这辈子遇到你',
+							user:'anni',
+							count:'309'
+						}
+					],
+					[
+
+					],
+					[
+
+					],
+					// 独家放送
+					[],
+					[]
 				]
 			};
 		}

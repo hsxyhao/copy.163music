@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/page/Home'
+import Music from '@/page/Music'
 import Mine from '@/page/Mine'
 
 Vue.use(Router)
@@ -9,13 +9,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
-      component: Home
+      name: 'Music',
+      component: Music
     },
     {
       path: '/home',
-      name: 'Home',
-      component: Home
+      name: 'Music',
+      component: Music
     },
     {
       path: '/my',

@@ -88,6 +88,7 @@
 	.footer .icon {
 		font-size: 56px;/*no*/
 		color: #CDCBCE;
+		padding: 10px;/*no*/
 	}
 	.footer a {
 		display: flex;

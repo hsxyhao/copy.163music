@@ -2,33 +2,33 @@
 	<div class="list">
 		<slot name="head"></slot>
 		<div class="list-box">
-			<div class="list-item" v-for="list in lists">
+			<div class="list-item" v-for="item in list">
 				<div class="list-img-box">
-					<img :src="list.img">
-					<span class="listen-count icon iconfont icon-headset">{{list.count}}</span>
+					<img :src="item.img">
+					<span class="listen-count icon iconfont icon-headset">{{item.count}}</span>
 				</div>
-				<p class="list-name">{{list.name}}</p>
-				<p class="list-user"><span class="icon iconfont icon-account"></span> {{list.user}}</p>
+				<p class="list-name">{{item.name}}</p>
+				<p class="list-user">{{item.user}}</p>
 			</div>
 		</div>
 	</div>
 </template>
 <script>
 	export default {
-		props:['lists'],
+		props:['list'],
 		data() {
 			return {};
 		}
 	}
 </script>
-<style>
+<style scope>
 	.list {
 		margin-top: 10px;
 	}
 	.list-box {
 		display: flex;
 		flex-direction: row;
-		padding: 10px 10px 60px 10px;
+		padding: 10px;
 	    box-sizing: border-box;
     	flex-wrap: wrap;
 	}
@@ -38,6 +38,7 @@
 		justify-content: center;
 		flex-direction: column;
 		width: 50%;
+	    margin: 5px 0;
 	}
 	.list-item img{
 		width: 150px;

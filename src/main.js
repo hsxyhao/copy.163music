@@ -9,8 +9,14 @@ import 'lib-flexible'
 // vue全局状态管理
 import store from './store'
 
-Vue.config.productionTip = false
+import AlloyFinger from 'alloyfinger'
+import AlloyFingerPlugin from 'alloyfinger/vue/alloy_finger.vue'
 
+Vue.use(AlloyFingerPlugin, {
+    AlloyFinger
+})
+
+Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({

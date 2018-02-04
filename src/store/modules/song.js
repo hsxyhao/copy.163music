@@ -1,13 +1,17 @@
 import * as types from '../mutation-types'
 
 const state = {
-	playing:true
+	playing:true,
+	img:'/static/imgs/list_6.jpg'
 }
 
 // getters
 const getters = {
 	getPlayStatus: state => {
-		return state.playing
+		return state.playing;
+	},
+	getPlayImg: state => {
+		return state.img;
 	}
 }
 

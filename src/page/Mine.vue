@@ -1,68 +1,62 @@
 <template>
-	<lazy-home>
-		<div slot="content" class="mine">
-			<div class="download-music">
-				<span>
-					<span class="icon iconfont icon-folder"></span>
-					<span>下载歌曲</span>	
-					<span>{{download}}</span>	
-					<span>首</span>	
-				</span>
-				<span class="icon iconfont icon-play-o"></span>
-			</div>
-			<div class="other">
-				<router-link to="/history">
-					<span class="icon iconfont icon-time-b"></span>
-					<span>最近播放</span>
-					<span>{{history}}</span>
-				</router-link>
-				<router-link to="/ranking">
-					<span class="icon iconfont icon-ranking"></span>
-					<span>播放榜</span>
-					<span>{{play}}</span>
-				</router-link>
-				<router-link to="/like">
-					<span class="icon iconfont icon-heart-b"></span>
-					<span>我喜欢</span>
-					<span>{{like}}</span>
-				</router-link>
-				<router-link to="/download/video">
-					<span class="icon iconfont icon-mv"></span>
-					<span>下载MV</span>
-					<span>{{downloadMv}}</span>
-				</router-link>
-			</div>
-			<div class="create-bar">
-				<span>我创建的歌单({{musicList.length}})</span>
-				<span class="iconfont icon icon-more"></span>
-			</div>
-			<ul class="music-list">
-				<li v-for="item in musicList" class="music-list-item">
-					<div class="list-item-left">
-						<img :src="item.img">
-						<div class="music-list-info">
-							<span class="music-list-name">{{item.name}}</span>
-							<span class="music-list-desc">
-								<span class="iconfont" :class="{'icon icon-selector':item.cacheCount>0}">
-								{{item.count}}首</span>
-								<span v-show="item.cacheCount>0">,已下载{{item.cacheCount}}首</span>
-							</span>
-						</div>
-					</div>
-					<span class="icon iconfont" :class="{'icon-volume':item.isplaying}"></span>
-				</li>
-			</ul>
-			<div class=""></div>
+	<div slot="content" class="mine">
+		<div class="download-music">
+			<span>
+				<span class="icon iconfont icon-folder"></span>
+				<span>下载歌曲</span>	
+				<span>{{download}}</span>	
+				<span>首</span>	
+			</span>
+			<span class="icon iconfont icon-play-o"></span>
 		</div>
-	</lazy-home>
+		<div class="other">
+			<router-link to="/history">
+				<span class="icon iconfont icon-time-b"></span>
+				<span>最近播放</span>
+				<span>{{history}}</span>
+			</router-link>
+			<router-link to="/ranking">
+				<span class="icon iconfont icon-ranking"></span>
+				<span>播放榜</span>
+				<span>{{play}}</span>
+			</router-link>
+			<router-link to="/like">
+				<span class="icon iconfont icon-heart-b"></span>
+				<span>我喜欢</span>
+				<span>{{like}}</span>
+			</router-link>
+			<router-link to="/download/video">
+				<span class="icon iconfont icon-mv"></span>
+				<span>下载MV</span>
+				<span>{{downloadMv}}</span>
+			</router-link>
+		</div>
+		<div class="create-bar">
+			<span>我创建的歌单({{musicList.length}})</span>
+			<span class="iconfont icon icon-more"></span>
+		</div>
+		<ul class="music-list">
+			<li v-for="item in musicList" class="music-list-item">
+				<div class="list-item-left">
+					<img :src="item.img">
+					<div class="music-list-info">
+						<span class="music-list-name">{{item.name}}</span>
+						<span class="music-list-desc">
+							<span class="iconfont" :class="{'icon icon-selector':item.cacheCount>0}">
+							{{item.count}}首</span>
+							<span v-show="item.cacheCount>0">,已下载{{item.cacheCount}}首</span>
+						</span>
+					</div>
+				</div>
+				<span class="icon iconfont" :class="{'icon-volume':item.isplaying}"></span>
+			</li>
+		</ul>
+		<div class=""></div>
+	</div>
 </template>
 <script>
-	import LazyHome from '@/components/LazyHome'
 	import BScroll from 'better-scroll'
 	export default {
-		components:{
-			LazyHome
-		},
 		data() {
 			return {
 				download:0,

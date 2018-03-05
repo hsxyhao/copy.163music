@@ -8,9 +8,13 @@ import 'lib-flexible'
 
 // vue全局状态管理
 import store from './store'
+// 快速点击，解决端300ms延迟
+import FastClick from 'fastclick'
 
 import AlloyFinger from 'alloyfinger'
 import AlloyFingerPlugin from 'alloyfinger/vue/alloy_finger.vue'
+
+FastClick.attach(document.body);
 
 Vue.use(AlloyFingerPlugin, {
     AlloyFinger

@@ -1,8 +1,9 @@
 import * as types from '../mutation-types'
 
 const state = {
-	playing:true,
-	img:'/static/imgs/list_6.jpg'
+	playing:false,
+	showPage:false,
+	img:'static/imgs/list_6.jpg'
 }
 
 // getters
@@ -12,6 +13,9 @@ const getters = {
 	},
 	getPlayImg: state => {
 		return state.img;
+	},
+	getShowPage: state => {
+		return state.showPage
 	}
 }
 
@@ -25,6 +29,12 @@ const actions = {
 	},
 	stop ({ commit, state }) {
 		commit(types.STOP);
+	},
+	showPage({ commit, state }) {
+		commit(types.SHOW);
+	},
+	hidePage({ commit, state }) {
+		commit(types.HIDE);
 	}
 }
 
@@ -38,6 +48,12 @@ const mutations = {
 	},
 	[types.STOP] (state) {
 		state.playing = false;
+	},
+	[types.SHOW] (state) {
+		state.showPage = true;
+	},
+	[types.HIDE] (state) {
+		state.showPage = false;
 	}
 }
 

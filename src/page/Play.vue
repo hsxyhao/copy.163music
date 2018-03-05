@@ -1,51 +1,31 @@
 <template>
-	<div class="play-page">
+	<div class="play-page" :class="{'page-show':showPage}">
 		<div class="play-relative">
 			<lazy-mask :img='img'></lazy-mask>
 			<div class="play-box">
-				<div class="play-top">
-					<span class="icon iconfont icon-down"></span>
-					<span>
-						<P class="play-title">六月的雨</P>
-					</span>
-					<span class="icon iconfont icon-more"></span>
-				</div>
-				<div class="play-middle">
-					<p class="play-singer">
-						<span class="line"></span>
-						<span>胡歌</span>
-						<span class="line"></span>
-					</p>
-					<div class="play-middle-info">
-						<span>标准 <span class="icon iconfont icon-down"></span></span>
-						<span>MV</span>
-						<span>音效</span>
-					</div>
-					<div class="play-middle-center">
-						<div class="play-content">
-							<div class="content-list" 
-								v-finger:touch-start="touchStart"
-						        v-finger:touch-move="touchMove"
-						        v-finger:touch-end="touchEnd"
-						        v-finger:touch-cancel="touchCancel">
-								<div ref="left" class="list-side list-left"></div>
-								<div class="list-img">
-									<img :src="img">
-									<p>（《仙剑奇侠传》 电视剧插曲 ）</p>
-								</div>
-								<div ref="right" class="list-side list-right">
-								</div>
-							</div>
-							<div class="content-index">
-								<div></div>
-								<div class="index-select"></div>
-								<div></div>
+				<div class="play-layout">
+					<div class="play-head" :class="{'play-head-show':showPage}">
+						<div class="play-top">
+							<span class="icon iconfont icon-down" v-finger:tap="hidePage"></span>
+							<span>
+								<P class="play-title">六月的雨</P>
+							</span>
+							<span class="icon iconfont icon-more"></span>
+						</div>
+						<div>
+							<p class="play-singer">
+								<span class="line"></span>
+								<span>胡歌</span>
+								<span class="line"></span>
+							</p>
+							<div class="play-middle-info">
+								<span>标准 <span class="icon iconfont icon-down"></span></span>
+								<span>MV</span>
+								<span>音效</span>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="play-bottom-box">
-					<div class="play-bottom">
+					<div class="play-bottom-box" :class="{'play-bottom-box-show':showPage}">
 						<div class="progress">
 							<span class="time-start">00:00</span>
 							<div class="progress-bar">
@@ -74,37 +54,62 @@
 </template>
 <script>
 	import LazyMask from '@/components/LazyMask'
-	import { mapGetters } from 'vuex'
-	const MAX_DISX = 60,MIN_DISX = 10;
-	let x = 0;
+	import { mapGetters,mapActions } from 'vuex'
 	export default {
 		components:{LazyMask},
 		computed: mapGetters({
-			img: 'getPlayImg'
+			img: 'getPlayImg',
+			showPage:'getShowPage'
 		}),
 		data() {
-			return {}
+			return {
+				playShow:true
+			}
 		},
 		methods: {
+			...mapActions([
+		      'hidePage'
+		    ]),
 			getDisXFromTouch: function (touches) {
 				return Math.floor(touches.changedTouches[0].clientX);
 			},
-			touchStop: function(e){
-				x = 0;
-			},
-			touchStart: function(e){
-				x = this.getDisXFromTouch(e);
-			},
-	        touchMove: function(e) { 
-	        },
-	        touchEnd: function(e) { 
-	        },
-	        touchCancel: function(e) { 
+	        hide: function(){
+	        	this.playShow = false
 	        }
 	    }
 	}
 </script>
 <style scope>
+	@media (min-device-height:568px) and (-webkit-min-device-pixel-ratio:2){/* 兼容iphone4/4s */
+		.list-img img {
+			width: 200px;
+			height: 200px;
+		}
+	}
+	@media (max-device-height:568px) and (-webkit-min-device-pixel-ratio:2){/* 兼容iphone4/4s */
+		.list-img img {
+			width: 250px;
+			height: 250px;
+		}
+	}
+	.play-page {
+		display: none;
+	}
+	.page-show {
+		display: inline;
+	}
+	/*播放页面动画*/
+	.play-head-show {
+		top: 200px;
+	}
+	.play-head {
+		position: absolute;
+		top: 200px;
+		height: 120px;
+		width: 100%;
+		transform: translateY(-200px);
+		transition: top .2s cubic-bezier(.2,.62,.78,1.67);
+	}
 	.play-page {
 		position: fixed;
 		top: 0px;
@@ -114,6 +119,7 @@
 		background-color: #c0c0c02e;
 		z-index: 1000;
 		color: #fff;
+		transition: all .2s linear;
 	}
 	.play-relative {
 		position: relative;
@@ -123,6 +129,12 @@
 	.play-box {
 	    position: relative;
 		z-index: 1000;
+    	height: 100%;
+	}
+	.play-layout {
+	    display: flex;
+    	flex-direction: column;
+    	height: 100%;
 	}
 	.play-top {
 		display: flex;
@@ -134,6 +146,7 @@
 	}
 	.play-top .icon{
 		font-size: 24px;
+		padding: 10px;/*no*/
 	}
 	.play-singer {
 		display: flex;
@@ -149,6 +162,9 @@
 		height: 1px;/*no*/
 		background-color: #fff;
 	}
+	.play-middle-center {
+		height: 100%;
+	}
 	.play-middle-info > span{
 		display: inline-block;
 		padding: 2px 6px;
@@ -157,61 +173,15 @@
 		margin: 6px 2px;
 		font-size: 22px;/*no*/
 	}
-	.content-list {
-		position: relative;
-		margin: 5px 0;
-	}
-	.content-list > .list-side {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0px;
-		transition: all .2s linear;
-	}
-	.list-left {
-		left: -100%;
-		background-color: red;
-	}
-
-	.list-right {
-		right: -100%;
-		background-color: black;
-	}
-	.content-index {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		margin: 8px;
-	}
-	.content-index div {
-		width: 8px;
-		height: 8px;
-		border-radius: 50%;
-		margin: 0 4px;
-		background-color: silver;
-	}
-	.index-select {
-		background-color: #fff !important;
-	}
-	.list-img {
-	}
-	.list-img > p{
-		margin: 10px 0;
-	} 
-	.list-img img{
-		width: 250px;
-		height: 250px;
-		border: 10px solid #4d4d4d4d;
-		border-radius: 50%;
+	.play-bottom-box-show {
+		bottom: 0px !important;
 	}
 	.play-bottom-box {
-		width: 
-	}
-	.play-bottom {
-	    position: fixed;
+		height: 150px;
 	    width: 100%;
-	    bottom: 0px;
-	    padding: 10px 0 20px;
+	    position: absolute;
+	    bottom: -150px;
+	    transition: bottom .2s cubic-bezier(.2,.62,.78,1.67);
 	}
 	.progress {
 		display: flex;

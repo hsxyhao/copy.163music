@@ -32,7 +32,7 @@
 	}
 	
 </script>
-<style>
+<style scope>
 	.recommend-music {
 		padding: 0 20px 20px;
 		background-color: #FAFAFA;

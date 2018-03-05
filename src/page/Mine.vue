@@ -66,49 +66,49 @@
 				downloadMv: 10,
 				musicList:[
 					{
-						img:'/static/imgs/singer.jpg',
+						img:'static/imgs/singer.jpg',
 						name:'周杰伦',
 						count:'20',
 						cacheCount:1,
 						isplaying:false
 					},
 					{
-						img:'/static/imgs/list_1.jpg',
+						img:'static/imgs/list_1.jpg',
 						name:'2017内涵段子',
 						count:'20',
 						cacheCount:1,
 						isplaying:false
 					},
 					{
-						img:'/static/imgs/list_2.jpg',
+						img:'static/imgs/list_2.jpg',
 						name:'小时候的回忆',
 						count:'20',
 						cacheCount:0,
 						isplaying:false
 					},
 					{
-						img:'/static/imgs/list_3.jpg',
+						img:'static/imgs/list_3.jpg',
 						name:'难忘的呼吸',
 						count:'20',
 						cacheCount:0,
 						isplaying:true
 					},
 					{
-						img:'/static/imgs/list_4.jpg',
+						img:'static/imgs/list_4.jpg',
 						name:'周杰伦',
 						count:'20',
 						cacheCount:1,
 						isplaying:false
 					},
 					{
-						img:'/static/imgs/list_5.jpg',
+						img:'static/imgs/list_5.jpg',
 						name:'随便听听',
 						count:'20',
 						cacheCount:0,
 						isplaying:true
 					},
 					{
-						img:'/static/imgs/list_6.jpg',
+						img:'static/imgs/list_6.jpg',
 						name:'最近想听',
 						count:'20',
 						cacheCount:0,
@@ -119,7 +119,7 @@
 		}
 	}
 </script>
-<style>
+<style scope>
 	.mine .icon {
 		font-size: 44px;/*no*/
 	}

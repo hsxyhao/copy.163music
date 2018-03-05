@@ -1,61 +1,82 @@
 <template>
-	<div class="footer-box">
-		<div class="play-bar">
-			<div class="progress">
-				<div class="progress-bg"></div>
-			</div>
-		</div>
-		<div class="footer">
-			<div class="found-music footer-selector">
-				<router-link to="/home">
-					<span class="icon iconfont icon-new-o"></span>
-					<span>发现音乐</span>
-				</router-link>
-			</div>
-			<div class="my-music">
-				<router-link to="/my">
-					<span class="icon iconfont icon-music-o"></span>
-					<span>我的音乐</span>
-				</router-link>
-			</div>
-			<div class="btn-fixed">
-				<div class="song-img">
-					<div class="song-edit" @touchend="togglePlay()">
-						<span class="icon iconfont icon-stop" :class="{'icon-stop':playing,'icon-play':!playing}"></span>
-					</div>
-					<img :class="{'stopAnimation':!playing,'runAnimtion':playing}" :src="song.img">
+	<div>
+		<div class="footer-box">
+			<div class="play-bar">
+				<div class="progress">
+					<div class="progress-bg"></div>
 				</div>
 			</div>
-			<div class="setting">
-				<router-link to="/">
-					<span class="icon iconfont icon-setting-o"></span>
-					<span>设置</span>
-				</router-link>
-			</div>
-			<div class="user">
-				<router-link to="/">
-					<span class="icon iconfont icon-user-o"></span>
-					<span>用户</span>
-				</router-link>
+			<div class="footer">
+				<div class="found-music footer-selector">
+					<router-link to="/home" v-finger:tap="routerChange">
+						<span class="icon iconfont icon-new-o"></span>
+						<span>发现音乐</span>
+					</router-link>
+				</div>
+				<div class="my-music">
+					<router-link to="/my" v-finger:tap="routerChange">
+						<span class="icon iconfont icon-music-o"></span>
+						<span>我的音乐</span>
+					</router-link>
+				</div>
+				<div class="btn-fixed">
+					<div class="song-img" >
+						<div class="song-edit" v-finger:tap="showPage" v-finger:double-tap="togglePlay" >
+							<span class="icon iconfont icon-stop" :class="{'icon-stop':playing,'icon-play':!playing}"></span>
+						</div>
+						<img :class="{'stopAnimation':!playing,'runAnimtion':playing}" :src="song.img">
+					</div>
+				</div>
+				<div class="setting">
+					<router-link to="/" v-finger:tap="routerChange">
+						<span class="icon iconfont icon-setting-o"></span>
+						<span>设置</span>
+					</router-link>
+				</div>
+				<div class="user">
+					<router-link to="/user" v-finger:tap="routerChange">
+						<span class="icon iconfont icon-user-o"></span>
+						<span>用户</span>
+					</router-link>
+				</div>
 			</div>
 		</div>
 	</div>
 </template>
 <script>
+	import LazyMask from '@/components/LazyMask'
 	import { mapGetters, mapActions } from 'vuex'
 	export default {
+		components:{ LazyMask },
 		computed: mapGetters({
-			playing: 'getPlayStatus'
+			playing: 'getPlayStatus',
+			img: 'getPlayImg',
+			showPlayPage:'getShowPage'
 		}),
-		methods: mapActions([
-			'togglePlay','play','stop'
-		]),
+		methods: {
+			...mapActions([
+				'togglePlay','play','stop','dbclick',
+				'showPage','hidePage'
+			]),
+			getDisXFromTouch: function (touches) {
+				return Math.floor(touches.changedTouches[0].clientX);
+			},
+	        hide: function(){
+	        	this.playShow = false
+	        },
+	        routerChange: function(event) {
+	        	document.querySelector('.footer-selector').classList.remove('footer-selector');
+	        	event.target.parentElement.parentElement.classList.add('footer-selector');
+        	}
+	    },
 		data() {
 			return {
 				show: true,
 				song:{
-					img:'/static/imgs/list_6.jpg'
-				}
+					img:'static/imgs/list_6.jpg'
+				},
+				startX: 0,
+				startY: 0
 			};
 		}
 	}
@@ -71,6 +92,7 @@
 		bottom: 0px;
 		height: 60px;
 		box-shadow: 0px 0px 20px silver;
+		background-color: #fff;
 	}
 	.footer {
 		display: flex;
@@ -88,12 +110,12 @@
 	.footer .icon {
 		font-size: 56px;/*no*/
 		color: #CDCBCE;
-		padding: 10px;/*no*/
+		padding-bottom: 4px;/*no*/
 	}
 	.footer a {
 		display: flex;
 		flex-direction: column;
-		color: #CDCBCE;
+		color: #9e9e9e;
 		font-size: 20px;/*no*/
 		flex: 1;
 		align-items: center;
@@ -123,7 +145,6 @@
 		width: 100%;
 		height: 100%;
 		border-radius: 50%;
-		
 		-webkit-animation: music_playing;
 		-o-animation: music_playing;
 		animation: music_playing;
@@ -143,7 +164,7 @@
 	.song-edit .icon {
 		z-index: 10;
     	font-size: 50px;/*no*/
-    	color: #919191a6;
+    	color: #fff;
 	}
 	.footer-selector a{
 		color: #EE4B5D;
@@ -168,10 +189,6 @@
 		display: flex;
 		flex-direction: row;
 	}
-	.progress {
-		width: 100%;
-		height: 3px;/*no*/
-	}
 	.progress-bg {
 		width: 60%;
 		height: 100%;
@@ -181,4 +198,5 @@
 		background: -webkit-linear-gradient(to right, #5FC3E4, #E55D87);  /* Chrome 10-25, Safari 5.1-6 */
 		background: linear-gradient(to right, #5FC3E4, #E55D87); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 	}
+
 </style>

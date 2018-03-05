@@ -1,20 +1,20 @@
 <template>
 	<div class="home">
 		<lazy-header></lazy-header>
-		<router-view>
-			<slot name="content"></slot>
-		</router-view>
+		<keep-alive>
+			<router-view>
+				<slot name="content"></slot>
+			</router-view>
+		</keep-alive>
 		<lazy-footer></lazy-footer>
-		<play></play>
 	</div>
 </template>
 <script>
 	import LazyHeader from '@/components/LazyHeader'
 	import LazyFooter from '@/components/LazyFooter'
-	import Play from '@/page/Play'
 	export default {
 		components:{
-			LazyHeader,LazyFooter,Play
+			LazyHeader,LazyFooter
 		},
 		data() {
 			return {

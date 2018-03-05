@@ -73,7 +73,8 @@
 		color: #f6f0f0;
 		font-size: 22px;/*no*/
 		height: 30px;
-		background-color: #54545429;
+		background: #5454541f;
+		background-color: #5454541f;
 		border-radius: 30px;
 	}
 </style>

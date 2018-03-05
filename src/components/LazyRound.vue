@@ -24,7 +24,10 @@
 			return {
 				ads:[
 					{
-						url:'/static/imgs/round_1.jpg'
+						url:'static/imgs/round_1.jpg'
+					},
+					{
+						url:'static/imgs/round_1.jpg'
 					}
 				]
 			};

@@ -1,3 +1,5 @@
 export const TOGGLE_PLAY = 'TOGGLE_PLAY'
 export const PLAY = 'PLAY'
 export const STOP = 'STOP'
+export const SHOW = 'SHOW'
+export const HIDE = 'HIDE'

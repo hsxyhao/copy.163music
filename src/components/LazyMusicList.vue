@@ -34,7 +34,7 @@
 </script>
 <style scope>
 	.recommend-music {
-		padding: 0 20px 20px;
+		padding: 0 10px 10px;
 		background-color: #FAFAFA;
 	}
 	.music-img-box img{
@@ -48,8 +48,8 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: 60px;
-		height: 60px;
+		width: 50px;
+		height: 50px;
 		border-radius: 50%;
 		overflow: hidden;
 	}
@@ -92,11 +92,11 @@
 		text-align: left;
 	}
 	.music-list-info .icon {
-		font-size: 44px;/*no*/
+		font-size: 28px;/*no*/
 		color: silver;
 	}
 	.music-name {
-		font-size: 36px;/*no*/
+		font-size: 24px;/*no*/
 		color: #000;
 		padding: 5px;
 	}

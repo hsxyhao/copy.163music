@@ -1,5 +1,56 @@
 <template>
 	<div slot="content" class="content-box" ref="viewport" @touchstart="touchStart" @touchend="touchEnd" @touchmove="touchMove">
+		<div class="wrapper" ref="mine">
+			<div class="mine">
+				<div class="download-music">
+					<span>
+						<span class="icon iconfont icon-folder"></span>
+						<span>下载歌曲</span>	
+						<span>{{download}}</span>	
+						<span>首</span>	
+					</span>
+					<span class="icon iconfont icon-play-o"></span>
+				</div>
+				<div class="other">
+					<router-link to="/history">
+						<span class="icon iconfont icon-time-b"></span>
+						<span>最近播放</span>
+						<span>{{history}}</span>
+					</router-link>
+					<router-link to="/ranking">
+						<span class="icon iconfont icon-ranking"></span>
+						<span>播放榜</span>
+						<span>{{play}}</span>
+					</router-link>
+					<router-link to="/like">
+						<span class="icon iconfont icon-heart-b"></span>
+						<span>我喜欢</span>
+						<span>{{like}}</span>
+					</router-link>
+					<router-link to="/download/video">
+						<span class="icon iconfont icon-mv"></span>
+						<span>下载MV</span>
+						<span>{{downloadMv}}</span>
+					</router-link>
+				</div>
+				<div class="create-bar">
+					<span>我创建的歌单({{musicList.length}})</span>
+					<span class="iconfont icon icon-down"></span>
+				</div>
+				<ul class="mine-list">
+					<li v-for="item in musicList" class="mine-list-li">
+						<img :src="item.img" class="list-img">
+						<div class="mine-list-info">
+							<span class="mine-list-name">{{item.name}}</span>
+							<span class="mine-list-desc">
+								<span>{{item.cacheCount}} 首</span>
+							</span>
+						</div>
+					</li>
+				</ul>
+				<div class=""></div>
+			</div>
+		</div>
 		<div class="wrapper" ref="music">
 			<div>
 				<div class="content">
@@ -26,7 +77,7 @@
 				<lazy-play-list :list="playlist.data" v-if="playlist!==null && playlist.data.length > 0">
 					<lazy-list-title slot="head" :title="playlist.title"></lazy-list-title>
 				</lazy-play-list>
-				<lazy-music-list :list="musiclist" v-if="playlist!==null && playlist.data.length > 0"></lazy-music-list>
+				<lazy-music-list :list="musiclist" v-if="musiclist!==null && musiclist.data.length > 0"></lazy-music-list>
 				<lazy-play-list :list="newlist.data" v-if="newlist!==null && newlist.data.length > 0">
 					<lazy-list-title slot="head" :title="newlist.title"></lazy-list-title>
 				</lazy-play-list>
@@ -34,12 +85,21 @@
 		</div>
 		<div class="wrapper" ref="video">
 			<div>
-				dsadasdasdasdas
-			</div>
-		</div>
-		<div class="wrapper" ref="radio">
-			<div>
-				dasdasdsadasdsa
+				<div class="video-box" v-for="video in videos">
+					<div class="video-img-box">
+						<img class="video-img" :src="video.img">
+						<h4 class="absolute video-name">{{video.name}}</h4>
+						<span class="absolute iconfont icon icon-play"></span>
+						<span class="absolute iconfont icon icon-play-count"> <span class="video-info">{{video.playcount}}</span></span>
+						<span class="absolute iconfont icon icon-video-time"> <span class="video-info">{{video.time}}</span></span>
+					</div>
+					<div class="bottom-bar">
+						<span class="video-author">{{video.author}}</span>
+						<span class="bottom-bar-right">
+							<span class="icon iconfont icon-good-b"></span>
+						</span>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -54,7 +114,7 @@
 	import api from '@/api/getData'
 	import axios from 'axios'
 
-const data = JSON.parse('{"playlist":{"title":"推荐歌单","code":200,"msg":"请求成功","data":[{"img":"static/imgs/list_1.jpg","name":"单曲循环都不够","user":"胖妞啊%cc","count":"30"},{"img":"static/imgs/list_2.jpg","name":"一直听到现在的歌","user":"夏季恋歌","count":"30"},{"img":"static/imgs/list_3.jpg","name":"让你沦陷的中文歌曲","user":"oba mylover","count":"10"},{"img":"static/imgs/list_4.jpg","name":"阳光下的旋律","user":"猪小妹-v5","count":"22"},{"img":"static/imgs/list_5.jpg","name":"天籁之音不觉于耳","user":"chenyu","count":"16"},{"img":"static/imgs/list_6.jpg","name":"还好这辈子遇到你","user":"anni","count":"30"}]},"musiclist":{"title":"今日推荐歌曲-30首","code":200,"msg":"请求成功","data":[{"img":"static/imgs/list_1.jpg","name":"我会想起你的","user":"丽江小倩","album":"试音天碟","count":"30"},{"img":"static/imgs/list_2.jpg","name":"回忆里的那个人","user":"李行亮","album":"回忆里的那个人","count":"30"},{"img":"static/imgs/list_3.jpg","name":"独身的理由","user":"My Little Airport","album":"独身的理由","count":"10"}]},"newlist":{"title":"新歌速递","code":200,"msg":"请求成功","data":[{"img":"static/imgs/list_1.jpg","name":"单曲循环都不够","user":"胖妞啊%cc","count":"30"},{"img":"static/imgs/list_2.jpg","name":"一直听到现在的歌","user":"夏季恋歌","count":"30"},{"img":"static/imgs/list_3.jpg","name":"让你沦陷的中文歌曲","user":"oba mylover","count":"10"},{"img":"static/imgs/list_4.jpg","name":"阳光下的旋律","user":"猪小妹-v5","count":"22"}]},"videolist":{"title":"推荐MV","code":200,"msg":"请求成功","data":[{"img":"static/imgs/list_1.jpg","name":"单曲循环都不够","user":"胖妞啊%cc","count":"30"},{"img":"static/imgs/list_2.jpg","name":"一直听到现在的歌","user":"夏季恋歌","count":"30"},{"img":"static/imgs/list_3.jpg","name":"让你沦陷的中文歌曲","user":"oba mylover","count":"10"},{"img":"static/imgs/list_4.jpg","name":"阳光下的旋律","user":"猪小妹-v5","count":"22"}]}}');
+const data = JSON.parse('{"playlist":{"title":"推荐歌单","code":200,"msg":"请求成功","data":[{"img":"static/imgs/list_1.jpg","name":"单曲循环都不够","user":"胖妞啊%cc","count":"30"},{"img":"static/imgs/list_2.jpg","name":"一直听到现在的歌","user":"夏季恋歌","count":"30"},{"img":"static/imgs/list_3.jpg","name":"让你沦陷的中文歌曲","user":"oba mylover","count":"10"},{"img":"static/imgs/list_4.jpg","name":"阳光下的旋律","user":"猪小妹-v5","count":"22"},{"img":"static/imgs/list_5.jpg","name":"天籁之音不觉于耳","user":"chenyu","count":"16"},{"img":"static/imgs/list_6.jpg","name":"还好这辈子遇到你","user":"anni","count":"30"}]},"musiclist":{"title":"今日推荐歌曲-30首","code":200,"msg":"请求成功","data":[{"img":"static/imgs/list_1.jpg","name":"我会想起你的","user":"丽江小倩","album":"试音天碟","count":"30"},{"img":"static/imgs/list_2.jpg","name":"回忆里的那个人","user":"李行亮","album":"回忆里的那个人","count":"30"},{"img":"static/imgs/list_3.jpg","name":"独身的理由","user":"My Little Airport","album":"独身的理由","count":"10"}]},"newlist":{"title":"推荐歌单","code":200,"msg":"请求成功","data":[{"img":"static/imgs/list_1.jpg","name":"单曲循环都不够","user":"胖妞啊%cc","count":"30"},{"img":"static/imgs/list_2.jpg","name":"一直听到现在的歌","user":"夏季恋歌","count":"30"},{"img":"static/imgs/list_3.jpg","name":"让你沦陷的中文歌曲","user":"oba mylover","count":"10"},{"img":"static/imgs/list_4.jpg","name":"阳光下的旋律","user":"猪小妹-v5","count":"22"},{"img":"static/imgs/list_5.jpg","name":"天籁之音不觉于耳","user":"chenyu","count":"16"},{"img":"static/imgs/list_6.jpg","name":"还好这辈子遇到你","user":"anni","count":"30"}]},"videolist":{"title":"推荐MV","code":200,"msg":"请求成功","data":[{"img":"static/imgs/list_1.jpg","name":"单曲循环都不够","user":"胖妞啊%cc","count":"30"},{"img":"static/imgs/list_2.jpg","name":"一直听到现在的歌","user":"夏季恋歌","count":"30"},{"img":"static/imgs/list_3.jpg","name":"让你沦陷的中文歌曲","user":"oba mylover","count":"10"},{"img":"static/imgs/list_4.jpg","name":"阳光下的旋律","user":"猪小妹-v5","count":"22"}]}}');
 
 	var viewport,
 	pageWidth,
@@ -77,7 +137,100 @@ const data = JSON.parse('{"playlist":{"title":"推荐歌单","code":200,"msg":"�
 			return {
 				playlist: null,
 				musiclist: null,
-				newlist: null
+				newlist: null,
+				videos:[
+					{
+						img:'/static/imgs/video2.jpg',
+						name:'听妈妈的话',
+						author:'周杰伦',
+						time:'00:33',
+						playcount: 210
+					},
+					{
+						img:'/static/imgs/video3.jpg',
+						name:'听妈妈的话',
+						author:'周杰伦',
+						time:'00:33',
+						playcount: 210
+					},
+					{
+						img:'/static/imgs/video2.jpg',
+						name:'听妈妈的话',
+						author:'周杰伦',
+						time:'00:33',
+						playcount: 210
+					},
+					{
+						img:'/static/imgs/video1.jpg',
+						name:'听妈妈的话',
+						author:'周杰伦',
+						time:'00:33',
+						playcount: 210
+					},
+					{
+						img:'/static/imgs/video3.jpg',
+						name:'听妈妈的话',
+						author:'周杰伦',
+						time:'00:33',
+						playcount: 210
+					}
+				],
+				download:0,
+				history: 23,
+				play: 11,
+				like: 10,
+				downloadMv: 10,
+				musicList:[
+					{
+						img:'static/imgs/singer.jpg',
+						name:'周杰伦',
+						count:'20',
+						cacheCount:1,
+						isplaying:false
+					},
+					{
+						img:'static/imgs/list_1.jpg',
+						name:'2017内涵段子',
+						count:'20',
+						cacheCount:1,
+						isplaying:false
+					},
+					{
+						img:'static/imgs/list_2.jpg',
+						name:'小时候的回忆',
+						count:'20',
+						cacheCount:0,
+						isplaying:false
+					},
+					{
+						img:'static/imgs/list_3.jpg',
+						name:'难忘的呼吸',
+						count:'20',
+						cacheCount:0,
+						isplaying:true
+					},
+					{
+						img:'static/imgs/list_4.jpg',
+						name:'周杰伦',
+						count:'20',
+						cacheCount:1,
+						isplaying:false
+					},
+					{
+						img:'static/imgs/list_5.jpg',
+						name:'随便听听',
+						count:'20',
+						cacheCount:0,
+						isplaying:true
+					},
+					{
+						img:'static/imgs/list_6.jpg',
+						name:'最近想听',
+						count:'20',
+						cacheCount:0,
+						isplaying:false
+					}
+				]
 			}
 		},
 		methods: {
@@ -161,8 +314,8 @@ const data = JSON.parse('{"playlist":{"title":"推荐歌单","code":200,"msg":"�
 		mounted() {
 			this.$nextTick(() => {
 				var musicScroll = new BScroll(this.$refs.music)
+				var mineScroll = new BScroll(this.$refs.mine)
 				var videoScroll = new BScroll(this.$refs.video)
-				var radioScroll = new BScroll(this.$refs.radio)
 			});
 			viewport =  this.$refs.viewport;
 			points = viewport.children;
@@ -240,5 +393,148 @@ const data = JSON.parse('{"playlist":{"title":"推荐歌单","code":200,"msg":"�
 	.wrapper {
 		overflow: hidden;
 		height: 100%;
+	}
+	
+	/*用户歌单界面*/
+	.download-music {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		height: 40px;
+		padding: 5px 10px;
+		border-bottom: 1px solid silver;/*no*/
+	}
+	.mine .icon {
+		font-size: 40px;/*no*/
+	}
+	.other {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 5px;
+	}
+	a {
+		color: #676767;
+	}
+	.other .icon {
+		font-size: 50px;/*no*/
+		margin: 2px;
+	}
+	.other > a {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		flex: 1;
+		font-size: 22px;/*no*/
+	}
+	.other span {
+		padding: 5px;/*no*/
+	}
+	.create-bar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		height: 40px;
+		padding: 0px 10px;
+		background-color: #f2f2f2;
+		border: none !important;
+	}
+	.create-bar .icon {
+		color: #7e7d7d;
+	}
+	.mine-list {
+		list-style-type: none;
+		padding: 0px;
+		margin: 0px;
+		padding: 0 20px;/*no*/
+	}
+	.mine-list-li {
+		display: flex;
+		align-items: center;
+		margin: 4px 0;/*no*/
+	}
+	.mine-list-info {
+		flex: 1;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding-left: 10px;
+		height: 40px;
+		margin-left: 4px;/*no*/
+		border-bottom: 1px solid silver;/*no*/
+	}
+	.list-img {
+		width: 40px;
+		height: 40px;
+	}
+	.mine-list-desc {
+		font-size: 18px;/*no*/
+		color: silver;
+	}
+	.video-box {
+		width: 100%;
+		height: 200px;
+		background-color: #e1e1e1;
+		margin-bottom: 10px;/*no*/
+		display: flex;
+		flex-direction: column;
+	}
+	.video-img {
+		width: 100%;
+		height: 160px;
+	}
+	.video-img-box {
+		position: relative;
+		flex: 1;
+	}
+	.video-img-box > .absolute {
+		position: absolute;
+	}
+	.video-img-box > .icon-play{
+		transform: translate(-50%,-50%);
+		left: 50%;
+		top: 50%;
+		color: #fff;
+		font-size: 60px;/*no*/
+		border-radius: 50%;
+    	background: #5554548f;
+	}
+	.video-img-box > .icon-play-count{
+		left: 0px;
+		bottom: 10px;
+		color: #fff;
+		font-size: 28px;/*no*/
+		padding: 0 10px;/*no*/
+	}
+	.video-img-box > .icon-video-time {
+		right: 0px;
+		bottom: 10px;
+		color: #fff;
+		font-size: 28px;/*no*/
+		padding: 0 10px;/*no*/
+	}
+	.video-info {
+		font-size: 20px !important;/*no*/
+		padding: 0 10px;/*no*/
+	}
+	.bottom-bar {
+		height: 40px;
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 10px;/*no*/
+		box-sizing: border-box;
+		background-color: #fff;
+	}
+	.video-name {
+		left: 0px;
+		top: 0px;
+		color: #fff;
+		padding: 10px;/*no*/
+	}
+	.bottom-bar-right > .icon {
+		font-size: 36px;/*no*/
 	}
 </style>

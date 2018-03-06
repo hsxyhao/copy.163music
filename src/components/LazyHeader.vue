@@ -5,9 +5,9 @@
 				<span class="icon iconfont icon-menu"></span>
 			</div>
 			<div class="bar-title">
-				<router-link to="/home"><span>音乐</span></router-link>
-				<router-link to="/self"><span>视频</span></router-link>
-				<router-link to="/self"><span>电台</span></router-link>
+				<span>我的</span>
+				<span>推荐</span>
+				<span>视频</span>
 			</div>
 			<playing></playing>
 		</div>

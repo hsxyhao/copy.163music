@@ -28,25 +28,25 @@
 	.list-box {
 		display: flex;
 		flex-direction: row;
-		padding: 10px;
 	    box-sizing: border-box;
     	flex-wrap: wrap;
+	    justify-content: space-between;
 	}
 	.list-item {
 		display: flex;
+		justify-content: start;
 		align-items: center;
-		justify-content: center;
 		flex-direction: column;
-		width: 50%;
+		width: 32%;
 	    margin: 5px 0;
 	}
 	.list-item img{
-		width: 150px;
-		height: 150px;
-		border-radius: 5px;
+		width: 100%;
+		height: 90px;
+		border-radius: 6px;/*no*/
 	}
 	.list-item > p {
-		width: 150px;
+		width: 100%;
 		text-align: left;
 		margin: 5px;/*no*/
 	}

@@ -8,18 +8,21 @@ const state = {
 const getters = {
 	getMenuStatus: state => {
 		return state.hide;
+	},
+	getLeftMenu: state => {
+		return state.lefeMenu;
 	}
 }
 
 // actions
 const actions = {
-	toggleMenu ({ commit, state }) {
+	toggleMenu({ commit, state }) {
 		commit(types.TOGGLE_MENU);
 	},
-	showMenu ({ commit, state }) {
+	showMenu({ commit, state }) {
 		commit(types.SHOW_MENU);
 	},
-	hideMenu ({ commit, state }) {
+	hideMenu({ commit, state }) {
 		commit(types.HIDE_MENU);
 	}
 }

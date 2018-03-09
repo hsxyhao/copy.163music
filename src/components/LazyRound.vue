@@ -24,7 +24,7 @@
 			return {
 				ads:[
 					{
-						url:'static/imgs/round_1.jpg'
+						url:'static/imgs/round0.png'
 					},
 					{
 						url:'static/imgs/round_1.jpg'
@@ -45,15 +45,15 @@
 		position: absolute;
 		bottom: 0px;
 		width: 100%;
-		height: 8px;
+		height: 16px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 	}
 	.round-index > div {
-		width: 8px;
-		height: 8px;
-		background-color: silver;
+		width: 4px;
+		height: 4px;
+		background-color: #fffcfc;
 		border-radius: 50%;
 		margin: 0 2px;
 	}
@@ -70,5 +70,6 @@
 	}
 	.ad-item > img {
 		width: 375px;
+		height: 100%;
 	}
 </style>

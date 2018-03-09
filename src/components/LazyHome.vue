@@ -3,24 +3,27 @@
 		<!--填充元素-->
 		<div class="fill-header"></div>
 		<lazy-header></lazy-header>
-		<keep-alive>
-			<router-view>
-				<slot name="content"></slot>
-			</router-view>
-		</keep-alive>
+		<music></music>
 		<lazy-footer></lazy-footer>
 		<lazy-music-menu></lazy-music-menu>
 		<lazy-left-menu></lazy-left-menu>
+		<div class="menu-mask" @touchend="closeLeftMenu"></div>
 	</div>
 </template>
 <script>
 	import LazyHeader from '@/components/LazyHeader'
+	import Music from '@/page/Music'
 	import LazyFooter from '@/components/LazyFooter'
 	import LazyMusicMenu from '@/components/LazyMusicMenu'
 	import LazyLeftMenu from '@/components/LazyLeftMenu'
 	export default {
 		components:{
-			LazyHeader,LazyFooter,LazyMusicMenu,LazyLeftMenu
+			LazyHeader,Music,LazyFooter,LazyMusicMenu,LazyLeftMenu
+		},
+		methods:{
+			closeLeftMenu() {
+				Music.methods.closeLeftMenu();
+			}
 		},
 		data() {
 			return {
@@ -35,6 +38,17 @@
 	html,body {
 		width: 100%;
 		height: 100%;
+	}
+
+	.menu-mask {
+		position: fixed;
+		display: none;
+		z-index: 10003;
+		opacity: 0;
+		width: 100%;
+		height: 100%;
+		top: 0px;
+		background-color: #464545bd;
 	}
 	.bg-black-gradients {
 		background: #232526;  /* fallback for old browsers */
@@ -51,9 +65,9 @@
 		width: 100%;
 	}
 	.home {
+	    position: relative;
 		font-size: 30px;/*no*/
 		height: 100%;
 	    width: 100%;
-	    overflow: hidden;
 	}
 </style>

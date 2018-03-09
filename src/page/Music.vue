@@ -1,5 +1,5 @@
 <template>
-	<div slot="content" class="content-box" ref="viewport" @touchstart="touchStart" @touchend="touchEnd" @touchmove="touchMove">
+	<div class="content-box" ref="viewport" @touchstart="touchStart" @touchend="touchEnd" @touchmove="touchMove" @touchcancel="touchMove">
 		<div class="wrapper" ref="mine">
 			<div class="mine">
 				<div class="download-music">
@@ -129,7 +129,12 @@ const data = JSON.parse('{"playlist":{"title":"推荐歌单","code":200,"msg":"�
 	startT = 0, //记录手指按下去的时
 	isTouchEnd = true, //标记当前滑动是否结束(手指已离开屏幕)
 	currentPosition = 0,
-	points;
+	points,
+	slideX,
+	page,
+	leftMenuWidth,
+	leftMenuOpen=false,
+	menuMask;
 
 	export default {
 		components:{
@@ -236,18 +241,33 @@ const data = JSON.parse('{"playlist":{"title":"推荐歌单","code":200,"msg":"�
 			}
 		},
 		methods: {
+			openLeftMenu() {
+				page.style.webkitTransition = "0.3s ease -webkit-transform";
+				page.style.webkitTransform = "translate3d("+leftMenuWidth+"px,0,0)";
+			},
+			closeLeftMenu() {
+				if (!leftMenuOpen) {
+					return;
+				}
+				menuMask.style.display = 'none';
+				menuMask.style.opacity = 0;
+				page.style.webkitTransition = "0.3s ease -webkit-transform";
+				page.style.webkitTransform = "translate3d(0,0,0)";
+			},
 			touchStart: function(event) {
 				event.preventDefault();
 				//单手指触摸或者多手指同时触摸，禁止第二个手指延迟操作事件
-                if(event.touches.length == 1 || isTouchEnd){
+                if(event.touches.length === 1 || isTouchEnd){
                    var touch = event.touches[0];
                    startX = touch.pageX;
                    startY = touch.pageY;
                    initialPos = currentPosition;   //本次滑动前的初始位置
                    viewport.style.webkitTransition = ""; //取消动画效果
+                   page.style.webkitTransition = ""; //取消动画效果
                    startT = new Date().getTime(); //记录手指按下的开始时间
                    isMove = false; //是否产生滑动
                    isTouchEnd = false; //当前滑动开始
+                   slideX = 0;
                 }
 			},
 			touchMove: function(event) {
@@ -267,21 +287,31 @@ const data = JSON.parse('{"playlist":{"title":"推荐歌单","code":200,"msg":"�
 						viewport.style.webkitTransform = "translate3d("+translate+"px,0,0)";
 						currentPosition = translate;
 						isMove = true;
+					} else if(translate > 0) {
+						// 左侧超出界面，开始划出左侧菜单
+						slideX =  deltaX;
+						if (translate > 50 && translate < leftMenuWidth) {
+               				menuMask.style.display = 'block';
+							leftMenuOpen = true;
+							menuMask.style.opacity = Math.abs(translate - 50) / leftMenuWidth;
+							page.style.webkitTransform = "translate3d("+(translate - 50)+"px,0,0)";
+						}
+					} else if(translate < maxWidth) {
+						slideX = maxWidth + Math.floor(deltaX / 3);
+						viewport.style.webkitTransform = "translate3d("+slideX+"px,0,0)";
 					}
 					direction = deltaX>0?"right":"left"; //判断手指滑动的方向
 				}
-               
 			},
 			touchEnd: function(event) {
 				var translate = 0;
 				//计算手指在屏幕上停留的时间
 				var deltaT = new Date().getTime() - startT;
 				//发生了滑动，并且当前滑动事件未结束
+			    viewport.style.webkitTransition = "0.3s ease -webkit-transform";
 				if (isMove && !isTouchEnd){ 
 				   isTouchEnd = true; //标记当前完整的滑动事件已经结束 
-				   
 				    //使用动画过渡让页面滑动到最终的位置
-				    viewport.style.webkitTransition = "0.3s ease -webkit-transform";
 				    if(deltaT < 300){ //如果停留时间小于300ms,则认为是快速滑动，无论滑动距离是多少，都停留到下一页
 				        translate = direction == 'left'?
 				        currentPosition-(pageWidth+moveLength):currentPosition+pageWidth-moveLength;
@@ -300,16 +330,19 @@ const data = JSON.parse('{"playlist":{"title":"推荐歌单","code":200,"msg":"�
 				            translate = translate < maxWidth ? maxWidth : translate;
 				        }
 				    }
-				   
 				    //执行滑动，让页面完整的显示到屏幕上
 					viewport.style.webkitTransform = "translate3d("+translate+"px,0,0)";
 					currentPosition = translate;
-				    //计算当前的页码
-				    // pageNow = Math.round(Math.abs(translate) / pageWidth) + 1;
-				    // setTimeout(function(){
-				    //     //设置页码，DOM操作需要放到异步队列中，否则会出现卡顿
-				    //     this.setPageNow();
-				    // }.bind(this),100);
+				} else {
+					if (slideX < 0) {
+						viewport.style.webkitTransform = "translate3d("+maxWidth+"px,0,0)";
+					} else {
+						if (Math.abs(slideX) > leftMenuWidth / 2) {
+							this.openLeftMenu();
+						} else {
+							this.closeLeftMenu();
+						}
+					}
 				}
 			}
 		},
@@ -320,7 +353,7 @@ const data = JSON.parse('{"playlist":{"title":"推荐歌单","code":200,"msg":"�
 				var videoScroll = new BScroll(this.$refs.video)
 			});
 			viewport =  this.$refs.viewport;
-			points = viewport.children;
+			points = viewport.querySelectorAll('.wrapper');
 			pageWidth = window.innerWidth; //页面宽度
 			maxWidth = - pageWidth * (points.length-1); //页面滑动最后一页的位置
 			startX,startY;
@@ -330,6 +363,9 @@ const data = JSON.parse('{"playlist":{"title":"推荐歌单","code":200,"msg":"�
 			isMove = false; //是否发生左右滑动
 			startT = 0; //记录手指按下去的时间
 			isTouchEnd = true; //标记当前滑动是否结束(手指已离开屏幕) 
+			page = document.querySelector('.home');
+			leftMenuWidth = document.querySelector('.left-menu').clientWidth;
+			menuMask = document.querySelector('.menu-mask');
 		},
 		created() {
 			let playlist = data.playlist,
@@ -359,6 +395,8 @@ const data = JSON.parse('{"playlist":{"title":"推荐歌单","code":200,"msg":"�
 		-webkit-animation-play-state:paused !important;
 	}
 	.content-box {
+		position: absolute;
+		z-index: 999;
 		padding-bottom: 60px;
 		overflow: hidden;
 		height: 100%;

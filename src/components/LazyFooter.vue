@@ -93,6 +93,7 @@
 		height: 46px;
 		box-shadow: 0px 0px 20px silver;
 		background-color: #ececec;
+		z-index: 999;
 	}
 	.footer {
 		display: flex;

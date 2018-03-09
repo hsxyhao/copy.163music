@@ -61,6 +61,7 @@
 		width: 100%;
 		height: 400px;
 		bottom: 0px;
+		z-index: 1000;
 		transition: transform .5s cubic-bezier(.32,-0.32,.66,1.34);
 	}
 	.music-menu .icon {

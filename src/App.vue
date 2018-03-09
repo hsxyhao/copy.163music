@@ -22,4 +22,7 @@
   overflow: hidden;
   height: 100%;
 }
+span {
+    letter-spacing: 2px;
+}
 </style>

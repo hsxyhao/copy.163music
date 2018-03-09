@@ -97,6 +97,8 @@
 						<span class="video-author">{{video.author}}</span>
 						<span class="bottom-bar-right">
 							<span class="icon iconfont icon-good-b"></span>
+							<span class="icon iconfont icon-talk"></span>
+							<span class="icon iconfont icon-share"></span>
 						</span>
 					</div>
 				</div>

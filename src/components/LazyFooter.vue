@@ -3,18 +3,12 @@
 		<div class="flex">
 			<div class="footer">
 				<div class="footer-left">
-					<div class="song-img" >
-						<img :class="{'stopAnimation':!playing,'runAnimtion':playing}" :src="song.img">
-						<div class="playsong-info">
-							<p>听妈妈的话</p>
-							<p>周杰伦</p>
-						</div>
-					</div>
+					<lazy-song-item :song='songs' :currentSong='songs[0]'></lazy-song-item>
 				</div>
 				<div class="footer-right">
-					<div class="song-edit" v-finger:tap="togglePlay" >
-						<span class="icon iconfont icon-stop" :class="{'icon-stop':playing,'icon-play':!playing}"></span>
-						<span class="icon iconfont icon-history"></span>
+					<div class="song-edit">
+						<span v-finger:tap="togglePlay" class="icon iconfont icon-stop" :class="{'icon-stop':playing,'icon-play':!playing}"></span>
+						<span v-finger:tap="showMenu" class="icon iconfont icon-history"></span>
 					</div>
 				</div>
 			</div>
@@ -26,9 +20,10 @@
 </template>
 <script>
 	import LazyMask from '@/components/LazyMask'
+	import LazySongItem from '@/components/LazySongItem'
 	import { mapGetters, mapActions } from 'vuex'
 	export default {
-		components:{ LazyMask },
+		components:{ LazyMask ,LazySongItem},
 		computed: mapGetters({
 			playing: 'getPlayStatus',
 			img: 'getPlayImg',
@@ -37,7 +32,7 @@
 		methods: {
 			...mapActions([
 				'togglePlay','play','stop','dbclick',
-				'showPage','hidePage'
+				'showPage','hidePage','showMenu'
 			]),
 	        hide: function(){
 	        	this.playShow = false
@@ -46,18 +41,43 @@
 		data() {
 			return {
 				show: true,
-				song:{
-					img:'static/imgs/list_6.jpg'
-				}
+				songs:[
+					{
+						img: 'static/imgs/list_6.jpg',
+						title: '听妈妈的话',
+						author: '周杰伦'
+					},
+					{
+						img: 'static/imgs/list_6.jpg',
+						title: '听妈妈的话',
+						author: '周杰伦'
+					},
+					{
+						img: 'static/imgs/list_6.jpg',
+						title: '听妈妈的话',
+						author: '周杰伦'
+					},
+					{
+						img: 'static/imgs/list_6.jpg',
+						title: '听妈妈的话',
+						author: '周杰伦'
+					},
+					{
+						img: 'static/imgs/list_6.jpg',
+						title: '听妈妈的话',
+						author: '周杰伦'
+					},
+					{
+						img: 'static/imgs/list_6.jpg',
+						title: '听妈妈的话',
+						author: '周杰伦'
+					}
+				]
 			};
 		}
 	}
 </script>
 <style scoped>
-	@keyframes music_playing {
-      from {transform:rotate(0deg);}
-      to {transform:rotate(360deg);}
-    }
     .relative {
     	position: relative;
     }
@@ -92,23 +112,18 @@
 	}
 	.footer-left {
 		position: relative;
-	}
-	.song-img {
 		display: flex;
-		flex-direction: row;
+		align-items: center;
+		flex: 1;
+		height: 100%;
 	}
-	.song-img > img {
-		width: 34px;
-		height: 34px;
-		border-radius: 50%;
-		-webkit-animation: music_playing;
-		-o-animation: music_playing;
-		animation: music_playing;
 
-		animation-duration: 3s;
-		animation-timing-function:linear;
-		animation-iteration-count:infinite;
-		animation-direction: normal; 
+	.footer-right {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 80px;
+		height: 100%;
 	}
 	.song-edit {
 		width: 100%;
@@ -133,16 +148,5 @@
 		background: #f85032;  /* fallback for old browsers */
 		background: -webkit-linear-gradient(to right, #e73827, #f85032);  /* Chrome 10-25, Safari 5.1-6 */
 		background: linear-gradient(to right, #e73827, #f85032); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-	}
-	.playsong-info {
-		display: flex;
-		align-items: center;
-		flex-direction: column;
-		justify-content: center;
-		margin-left: 10px;/*no*/
-	}
-	.playsong-info > p{
-		font-size: 20px;/*no*/
-		margin-top: 4px;/*no*/
 	}
 </style>

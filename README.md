@@ -1,6 +1,14 @@
 # Lazy-Music
 
-> 使用vue开发的web ap项目，在界面以及交互设计等方面结合网易云与qq音乐
+使用vue开发的web app项目，UI使用的是[网上的素材](http://www.25xt.com/appdesign/13734.html)
+
+项目效果演示
+1. 首页
+![image](/static/gif/home.gif)
+2. 上一首下一首切换
+![image](/static/gif/pre_next.gif)
+3. 播放状态
+![image](/static/gif/plying.gif)
 
 ## Build Setup
 
@@ -17,5 +25,3 @@ npm run build
 # build for production and view the bundle analyzer report
 npm run build --report
 ```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

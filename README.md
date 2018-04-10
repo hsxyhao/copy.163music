@@ -1,6 +1,6 @@
-# funfox
+# Lazy-Music
 
-> A Vue.js project
+> 使用vue开发的web ap项目，在界面以及交互设计等方面结合网易云与qq音乐
 
 ## Build Setup
 

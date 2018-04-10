@@ -3,12 +3,18 @@
 使用vue开发的web app项目，UI使用的是[网上的素材](http://www.25xt.com/appdesign/13734.html)
 
 项目效果演示
-> 首页
-![image](/static/gif/home.gif)
-> 上一首下一首切换
-![image](/static/gif/pre_next.gif)
-> 播放状态
-![image](/static/gif/playing.gif)
+1. **首页**
+
+![image](static/gif/home.gif)
+
+2. **上一首 下一首切换**
+
+![image](static/gif/pre_next.gif)
+
+3. **播放状态**
+
+![image](static/gif/playing.gif)
+![image](static/gif/playing1.gif)
 
 ## Build Setup
 

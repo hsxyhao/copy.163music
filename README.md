@@ -14,7 +14,7 @@
 
 3. 播放状态
 
-![image](static/gif/playing0.gif)
+![image](static/gif/playing_0.gif)
 ![image](static/gif/playing_1.gif)
 
 ## Build Setup
